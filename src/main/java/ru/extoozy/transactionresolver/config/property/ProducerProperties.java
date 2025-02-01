@@ -26,4 +26,5 @@ public class ProducerProperties {
 
     @Value("${t1.kafka.producer.value-serializer}")
     private String valueSerializer;
+    
 }

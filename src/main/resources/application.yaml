@@ -24,6 +24,7 @@ t1:
       auto-offset-reset: "earliest"
       heartbeat-interval-ms: 3000
       max-partition-fetch-bytes: 300000
+      isolation-level: read_committed
 
     producer:
       retries: 3
