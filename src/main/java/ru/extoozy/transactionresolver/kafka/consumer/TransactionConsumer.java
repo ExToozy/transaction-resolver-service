@@ -18,11 +18,11 @@ public class TransactionConsumer {
     private final TransactionResolverService transactionService;
 
     @KafkaListener(
-            topics = "${t1.kafka.topic.transaction_accept}"
+            topics = "${t1.kafka.topic.transaction-accept}"
     )
-    public void handle(List<TransactionDto> transactionJsonList, Acknowledgment ack) {
+    public void handle(List<TransactionDto> transactionDtos, Acknowledgment ack) {
         try {
-            transactionJsonList.forEach(transactionService::resolveTransactionResult);
+            transactionDtos.forEach(transactionService::resolveTransactionResult);
         } catch (Exception e) {
             log.error("Error occurred while trying read message: ", e);
         } finally {

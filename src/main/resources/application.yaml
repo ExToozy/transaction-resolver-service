@@ -9,16 +9,15 @@ t1:
       max-interval-between-requests: 1000
 
   kafka:
-    bootstrap:
-      server: ${KAFKA_SERVER:localhost:9092}
 
     consumer:
+      servers: ${KAFKA_SERVER:localhost:9092}
       group-id: t1-demo
       max-poll-records: 10
       max-poll-interval-ms: 300000
       session-timeout: 10000
-      key-serializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-serializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       trusted-packages: "*"
       enable-auto-commit: false
       auto-offset-reset: "earliest"
@@ -27,6 +26,7 @@ t1:
       isolation-level: read_committed
 
     producer:
+      servers: ${KAFKA_SERVER:localhost:9092}
       retries: 3
       retry-backoff-ms: 1000
       enable-idempotence: false
@@ -34,6 +34,5 @@ t1:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
     topic:
-      transaction_accept: t1_demo_transaction_accept
-      transaction_result: t1_demo_transaction_result
-
+      transaction-accept: t1_demo_transaction_accept
+      transaction-result: t1_demo_transaction_result
