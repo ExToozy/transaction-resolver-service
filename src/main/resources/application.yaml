@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: transaction-resolver-service
+
+t1:
+  rate-limiter:
+    transaction-limit:
+      max-requests: 10
+      max-interval-between-requests: 1000
+
+  kafka:
+
+    consumer:
+      servers: ${KAFKA_SERVER:localhost:9092}
+      group-id: t1-demo
+      max-poll-records: 10
+      max-poll-interval-ms: 300000
+      session-timeout: 10000
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      trusted-packages: "*"
+      enable-auto-commit: false
+      auto-offset-reset: "earliest"
+      heartbeat-interval-ms: 3000
+      max-partition-fetch-bytes: 300000
+      isolation-level: read_committed
+
+    producer:
+      servers: ${KAFKA_SERVER:localhost:9092}
+      retries: 3
+      retry-backoff-ms: 1000
+      enable-idempotence: false
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+    topic:
+      transaction-accept: t1_demo_transaction_accept
+      transaction-result: t1_demo_transaction_result
